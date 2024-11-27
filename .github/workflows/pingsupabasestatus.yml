@@ -1,0 +1,19 @@
+name: Check Supabase Status
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Runs at 00:00 UTC every day
+
+jobs:
+  check-status:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Supabase Status
+        uses: distributhor/workflow-dispatch@v1
+        with:
+          # Replace with your Supabase project URL
+          url: ${{ secrets.SUPABASE_PROJECT_URL }}/rest/v1/
+          method: GET
+          headers: 'Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}'
+        continue-on-error: true # Allow the workflow to continue even if the request fails
+
